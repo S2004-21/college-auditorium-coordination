@@ -1,0 +1,23 @@
+{
+  "name": "college-auditorium-coordination",
+  "version": "1.0.0",
+  "description": "Role-based college auditorium scheduling and event coordination system.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test",
+    "seed": "node scripts/seed-demo.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2",
+    "dotenv": "^16.4.7"
+  },
+  "allowScripts": {
+    "better-sqlite3@11.10.0": true
+  }
+}

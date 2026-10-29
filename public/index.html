@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10294a">
+  <title>College Auditorium | Event Coordination</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main id="authView" class="auth-shell">
+    <section class="auth-story">
+      <div class="story-brand"><span class="brand-icon">▥</span><span>COLLEGE OPERATIONS</span></div>
+      <div class="story-copy">
+        <p class="eyebrow gold">PLAN · CHECK · COORDINATE · CONDUCT</p>
+        <h1>Auditorium<br>Coordination<br><span>System</span></h1>
+        <p>A shared platform for students, faculty and college staff to view auditorium availability, coordinate events and prevent scheduling conflicts.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature"><span>▦</span><strong>View schedule</strong><small>Check approved events</small></div>
+        <div class="feature"><span>⌕</span><strong>Check availability</strong><small>Find free time slots</small></div>
+        <div class="feature"><span>♧</span><strong>Organize events</strong><small>Coordinate departments</small></div>
+        <div class="feature"><span>⬡</span><strong>Secure access</strong><small>Role-based permissions</small></div>
+      </div>
+      <p class="story-quote">“Better events. Better coordination. A more vibrant campus.”</p>
+    </section>
+    <section class="auth-side">
+      <div class="auth-card">
+        <div class="school-emblem">♜</div>
+        <p class="eyebrow center">COLLEGE AUDITORIUM</p>
+        <h2 id="authTitle">Welcome back</h2>
+        <p class="muted center" id="authSubtitle">Sign in to continue to your campus workspace.</p>
+        <div id="roleChoices" class="role-choices" aria-label="Select your role">
+          <button type="button" class="role-choice selected" data-role="student"><span>♟</span>Student</button>
+          <button type="button" class="role-choice" data-role="faculty"><span>♧</span>Faculty</button>
+          <button type="button" class="role-choice" data-role="principal"><span>⬡</span>Principal</button>
+        </div>
+        <form id="loginForm" class="form-stack">
+          <label>Username<input id="loginUsername" autocomplete="username" minlength="3" required placeholder="Enter your username"></label>
+          <label>Password<div class="password-field"><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter your password"><button type="button" class="reveal-button" id="togglePassword" aria-label="Show password">◉</button></div></label>
+          <button class="button button-primary full" type="submit">Login <span>→</span></button>
+        </form>
+        <div id="setupFormWrap" class="hidden">
+          <div class="setup-note"><strong>First-time setup</strong><p>No principal account exists yet. Create the first principal account using the setup key from your private <code>.env</code> file.</p></div>
+          <form id="setupForm" class="form-stack">
+            <label>Initial setup key<input id="setupKey" type="password" required autocomplete="off" placeholder="Enter SETUP_KEY"></label>
+            <label>Principal display name<input id="setupDisplayName" required minlength="2" maxlength="80" placeholder="e.g. College Principal"></label>
+            <label>Principal username<input id="setupUsername" required minlength="3" maxlength="40" placeholder="Choose a username"></label>
+            <label>Create password<input id="setupPassword" type="password" required minlength="10" autocomplete="new-password" placeholder="At least 10 characters"></label>
+            <button class="button button-primary full" type="submit">Create principal account →</button>
+          </form>
+        </div>
+        <div id="authMessage" class="message" role="status" aria-live="polite"></div>
+        <div class="auth-divider"><span>SECURE CAMPUS ACCESS</span></div>
+        <div class="new-user"><strong>New user?</strong><p>Contact the college administration to get your login credentials. Only the principal can create accounts.</p></div>
+      </div>
+      <p class="auth-foot">College Auditorium Availability &amp; Event Coordination System</p>
+    </section>
+  </main>
+
+  <div id="appView" class="hidden">
+    <header class="hero"><div class="wrap hero-inner"><div class="brand-mark">CH</div><div><p class="eyebrow">CAMPUS OPERATIONS</p><h1>Auditorium Schedule</h1><p class="hero-copy">One shared view of approved auditorium bookings.</p></div><div class="user-tools"><div><strong id="currentUserName">Signed in</strong><span id="currentUserRole" class="role-badge">Student</span></div><button id="logoutButton" class="button button-light" type="button">Sign out</button></div></div></header>
+    <main class="wrap main-grid">
+      <section class="panel schedule-panel">
+        <div class="section-heading"><div><p class="eyebrow">PLAN WITH CONFIDENCE</p><h2>Approved bookings</h2></div><button class="button button-light" id="refreshButton" type="button">Refresh schedule</button></div>
+        <p class="muted">Check the latest recorded schedule before making event arrangements.</p>
+        <div class="filters"><label>Filter by date<input type="date" id="filterDate"></label><label>Filter by department<input type="text" id="filterDepartment" placeholder="e.g. Information Science"></label><button class="button button-dark" id="applyFilters" type="button">Apply</button><button class="text-button" id="clearFilters" type="button">Clear</button></div>
+        <div id="message" class="message" role="status" aria-live="polite"></div><div id="bookings" class="booking-list"><div class="empty-state">Loading schedule…</div></div>
+        <p class="disclaimer"><strong>Important:</strong> A free time slot is not an approval. Only the principal or authorized college staff can approve official bookings.</p>
+      </section>
+      <aside class="side-column">
+        <section class="panel availability-panel"><p class="eyebrow">BEFORE YOU PLAN</p><h2>Check a time slot</h2><p class="muted">Check whether an approved booking overlaps your preferred time.</p><form id="availabilityForm" class="form-stack"><label>Date<input type="date" id="availabilityDate" required></label><div class="two-col"><label>Start time<input type="time" id="availabilityStart" value="10:00" required></label><label>End time<input type="time" id="availabilityEnd" value="11:00" required></label></div><button class="button button-accent" type="submit">Check availability</button></form><div id="availabilityResult" class="availability-result" role="status" aria-live="polite">Choose a date and time to check.</div></section>
+        <section id="requestPanel" class="panel hidden"><p class="eyebrow">FACULTY WORKSPACE</p><h2>Request an event slot</h2><p class="muted">Submit your proposed event for principal review. Submission is not approval.</p><form id="requestForm" class="form-stack"><label>Event name<input id="requestEventName" maxlength="100" required placeholder="e.g. Department Seminar"></label><label>Department<input id="requestDepartment" maxlength="100" required placeholder="e.g. Computer Science"></label><label>Date<input type="date" id="requestDate" required></label><div class="two-col"><label>Start time<input type="time" id="requestStart" required></label><label>End time<input type="time" id="requestEnd" required></label></div><label>Contact person<input id="requestContact" maxlength="100" required placeholder="Coordinator name"></label><label>Notes (optional)<textarea id="requestNotes" maxlength="500" rows="2" placeholder="Event requirements"></textarea></label><button class="button button-accent" type="submit">Submit request</button></form><div id="requestMessage" class="message"></div><h3 class="subheading">My requests</h3><div id="myRequests" class="request-list"></div></section>
+        <section id="principalBookingPanel" class="panel hidden"><div class="section-heading"><div><p class="eyebrow">PRINCIPAL WORKSPACE</p><h2>Manage official bookings</h2></div><span class="lock-icon">✓</span></div><p class="muted">Only a signed-in principal can add, edit or cancel official bookings.</p><form id="bookingForm" class="form-stack"><input type="hidden" id="bookingId"><label>Event name<input id="eventName" maxlength="100" required placeholder="e.g. Project Expo"></label><label>Department<input id="department" maxlength="100" required placeholder="e.g. Information Science"></label><label>Date<input type="date" id="eventDate" required></label><div class="two-col"><label>Start time<input type="time" id="startTime" required></label><label>End time<input type="time" id="endTime" required></label></div><label>Contact person<input id="contactPerson" maxlength="100" required placeholder="Department coordinator"></label><label>Notes (optional)<textarea id="notes" maxlength="500" rows="2" placeholder="Setup or coordination notes"></textarea></label><div class="form-actions"><button class="button button-accent" id="saveBooking" type="submit">Add approved booking</button><button class="button button-light hidden" id="cancelEdit" type="button">Stop editing</button></div></form></section>
+        <section id="requestsPanel" class="panel hidden"><p class="eyebrow">REVIEW QUEUE</p><h2>Booking requests</h2><p class="muted">Review faculty requests before they become official bookings.</p><div id="allRequests" class="request-list"></div></section>
+        <section id="usersPanel" class="panel hidden"><p class="eyebrow">ACCOUNT ADMINISTRATION</p><h2>Manage user accounts</h2><p class="muted">Create or disable student, faculty and principal accounts. Share credentials privately.</p><form id="userForm" class="form-stack"><label>Full name<input id="newDisplayName" required minlength="2" maxlength="80" placeholder="Full name"></label><label>Username<input id="newUsername" required minlength="3" maxlength="40" placeholder="Unique username"></label><label>Role<select id="newRole" required><option value="student">Student</option><option value="faculty">Faculty</option><option value="principal">Principal</option></select></label><label>Temporary password<input id="newPassword" type="password" required minlength="10" autocomplete="new-password" placeholder="At least 10 characters"></label><button class="button button-primary" type="submit">Create account</button></form><div id="userMessage" class="message"></div><div id="usersList" class="user-list"></div></section>
+        <section class="panel password-panel"><p class="eyebrow">ACCOUNT SECURITY</p><h2>Change password</h2><form id="passwordForm" class="form-stack"><label>Current password<input id="currentPassword" type="password" required autocomplete="current-password"></label><label>New password<input id="newPasswordSelf" type="password" required minlength="10" autocomplete="new-password" placeholder="At least 10 characters"></label><button class="button button-light" type="submit">Update password</button></form><div id="passwordMessage" class="message"></div></section>
+      </aside>
+    </main>
+    <footer class="wrap footer"><span>College Auditorium Availability &amp; Event Coordination System</span><span>Role-based campus coordination prototype</span></footer>
+  </div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
